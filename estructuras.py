@@ -113,7 +113,7 @@ class Singly_linked_list:
         while node:
             print(node.dia)
             #imprimir informacion de cada dia
-            #node.informacion_dia()
+            node.informacion_dia()
             node = node.next_node   
     def evento_dia(self,dia):
         node = self.head_node
@@ -203,7 +203,7 @@ def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
         print("El mes que escogio no existe")
         return None
     i=1
-    fecha_evento=fecha_mes[mes-1].head_node
+    fecha_evento=fecha_mes[mes].head_node
     while i<=dia:
         if fecha_evento.dia==dia:
             fecha_evento.set_nombre_invitado(nombre_invitado)
@@ -216,12 +216,12 @@ def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
 def mostrar_evento(mes,dia):
     print("Mes:",mes)
     print("Dia:",dia)
-    fecha_mes[mes-1].evento_dia(dia)
+    fecha_mes[mes].evento_dia(dia)
 
 #prueba de ingreso de datos
 ingreso_evento(2,11,"Jose",22,"USFQ","Graduacion")
 #prueba de salida de datos
-mostrar_evento(2, 11)      
+mostrar_evento(2, 11)
 #enero
 #fecha_mes[0].replaceinside(1, "J1", 21, "I1", "H1")
 #febrero
@@ -236,10 +236,8 @@ mostrar_evento(2, 11)
 #fecha_mes[5].replaceinside(6, "J6", 20, "II", "H6")
 
 
-for i in range(1,13):
-    print(" ")
-    print("MES ", i )
-    fecha_mes[i].list_traversed()
+
+fecha_mes[2].list_traversed()
 
 
 #REUSMEN
