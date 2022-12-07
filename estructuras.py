@@ -192,9 +192,12 @@ def año():
 #fecha_mes[1].list_traversed()
 
 
+eventos_favoritos={} #HashTable donde se guardan tipos de eventos
 
 año()
 
+def regresar_tabla(clave):
+    return eventos_favoritos[clave]
 
 
 #Creacion de eventos por dia
@@ -210,18 +213,41 @@ def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
             fecha_evento.set_numero_invitados(numero_invitados)
             fecha_evento.set_lugar(lugar)
             fecha_evento.set_evento(evento)
+            if fecha_evento.evento in eventos_favoritos:#Se valida que no exista la clave del hashtable
+                eventos_favoritos[fecha_evento.evento]=eventos_favoritos[fecha_evento.evento]+1
+            else:
+                eventos_favoritos[fecha_evento.evento]=1 #Ingreso datos en HashTable
         fecha_evento=fecha_evento.next_node
         i+=1
-        
+
+#Funcion para mostrar un dia en especifico        
 def mostrar_evento(mes,dia):
     print("Mes:",mes)
     print("Dia:",dia)
     fecha_mes[mes].evento_dia(dia)
 
+#Funcion para ver el eveto que mas se repite
+def evento_recurrente():
+    tipo_evento="hola"
+    repetido=1
+    for x in eventos_favoritos:
+        if eventos_favoritos[x]>repetido:
+            tipo_evento=x
+            repetido=eventos_favoritos[x]
+    print("Su evento mas recurrente es: ", tipo_evento, " , este evento se repite ",repetido, " veces al año.")
+        
+
 #prueba de ingreso de datos
 ingreso_evento(2,11,"Jose",22,"USFQ","Graduacion")
+ingreso_evento(2,12,"Jose",25,"USFQ","Premiacion")
+ingreso_evento(1,20,"Jose",12,"Casa","Familiar")
+ingreso_evento(2,5,"Jose",5,"Cine","Social")
+ingreso_evento(1,11,"Jose",22,"Casa","Familiar")
+ingreso_evento(2,2,"Jose",25,"Empresa","Laboral")
+ingreso_evento(1,19,"Jose",22,"Restaurante","Familiar")
+ingreso_evento(2,14,"Jose",25,"Empresa","Laboral")
 #prueba de salida de datos
-mostrar_evento(2, 11)
+#mostrar_evento(2, 11)
 #enero
 #fecha_mes[0].replaceinside(1, "J1", 21, "I1", "H1")
 #febrero
@@ -235,9 +261,10 @@ mostrar_evento(2, 11)
 #junio
 #fecha_mes[5].replaceinside(6, "J6", 20, "II", "H6")
 
+evento_recurrente() #muestra el evento que mas se repite
 
 
-fecha_mes[2].list_traversed()
+#fecha_mes[2].list_traversed() #Calendario mes 2
 
 
 #REUSMEN
