@@ -161,3 +161,17 @@ fecha_mes[9].replaceinside(10, "J4", 24, "I4", "H4")
 fecha_mes[10].replaceinside(11, "J5", 25, "I5", "H5")
 #diciembre
 fecha_mes[11].replaceinside(12, "J3", 23, "I3", "H3")
+
+print("-------------------")
+def search_by_event(year, event):
+    count = 0
+    for month in year:
+        node = month.head_node
+        events = []
+        while node:
+            if(node.evento == event):
+                print("Dia: " + str(node.dia) + "|| Mes: " + str(count) + "||  Evento: " + str(node.evento))
+            node = node.next_node
+        count += 1
+    
+search_by_event(fecha_mes, "H3")
