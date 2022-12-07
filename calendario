@@ -1,0 +1,189 @@
+dia = 1
+class Node: #dia del calendario 
+    
+    def __init__(self, host=None, numero_invitados=None, lugar=None, evento=None):
+        self.next_node = None  #orden estandar de los dias 1-30    
+        global dia 
+        
+          
+        if(dia == 32):
+            dia = 1
+        self.dia = dia   #cada coneccion de un nodo va aumentando el numero de dia 
+        dia +=1
+         # la siguiente vez que creo un nodo sera uno mas arriba 
+        self.host = host #una variable string que serivira para agrupar todos los nodos que contengan dicho nombre 
+        self.numero_invitados = numero_invitados #agrupar nodos que contengan mismo lugar 
+        self.lugar = lugar  #una variable string que serivira para agrupar todos los nodos que contengan dicho nombre
+        self.evento = evento #familiar, social, academicas 
+        
+    
+    def set_next_node(self, next_node):
+        self.next_node = next_node
+        
+    #def crear_evento():
+        #numero de invitados
+        #nombre de invitado 
+        #lugar
+        #fecha (prioridad por fecha mas cercana) Stack en linked list 
+ 
+mes = 1 
+class Singly_linked_list: 
+    """
+    Implementation of a singly linked list
+    """
+    def __init__(self, ):
+   
+        global mes      
+        if(mes == 12):
+            mes = 1
+        self.mes = mes  #meses desde 1-12
+        mes +=1
+        self.head_node = None
+        self.next_List = None #sirve para conectar mes 1, con mes 2, con mes 3 etc  porque cada mes es una linked list de 30 nodos 
+        self.next_node = None
+        self.fecha = []
+        
+        
+        for i in range(1,32):    
+            self.fecha.append(Node())#una single linked list crea 30 nodos y los conecta automaticamente
+            if(i > 1):
+               self.fecha[i-2].set_next_node(self.fecha[i-1])
+        self.head_node = self.fecha[0]       
+    def set_next_List(self, next_List): 
+        self.next_List = next_List
+    def list_traversed(self):
+        node = self.head_node
+        while node:
+            if node.host != None:#este if se agrega para desplegar solamente los dias con eventos
+                print(node.dia, ': ', node.host, ", ", node.numero_invitados, ", ", node.lugar, ", ", node.evento)
+            node = node.next_node
+            
+class Singly_linked_list(Singly_linked_list):
+    def insert_head(self, new_node):
+        new_node.set_next_node(self.head_node)
+        self.head_node = new_node
+        
+    def insert_tail(self, new_node):
+        node = self.head_node
+        prev = None
+        while node:
+            prev = node
+            node = node.next_node
+        prev.set_next_node(new_node)
+        
+    def insert_middle(self, new_node, value):
+        node = self.head_node
+        while node.val != value:
+            node = node.next_node
+        if node:
+            new_node.set_next_node(node.next_node)
+            node.set_next_node(new_node)
+        else:
+            self.insert_tail(new_node)
+            
+    def replaceinside(self,value,newnombre,newnumero,newlugar,newevento):#metodo para poder agregar eventos al calendario
+        node = self.head_node
+        while node.dia != value:
+            node = node.next_node
+        node.host = newnombre
+        node.numero_invitados = newnumero
+        node.lugar = newlugar
+        node.evento = newevento
+     
+     
+fecha_mes = []  #<----
+def año(): 
+    
+    for i in range(1,14):
+        fecha_mes.append(Singly_linked_list())#un año crea 12 single linked list conectadas en otra linked list
+        if(i > 1):
+           fecha_mes[i-2].set_next_List(fecha_mes[i-1])
+           
+año()
+#enero
+fecha_mes[0].replaceinside(1, "J1", 21, "I1", "H1")
+#febrero
+fecha_mes[1].replaceinside(2, "J2", 22, "I2", "H2")
+fecha_mes[1].replaceinside(5, "J6", 20, "II", "H6")
+#marzo
+fecha_mes[2].replaceinside(3, "J3", 23, "I3", "H3")
+#abril
+fecha_mes[3].replaceinside(4, "J4", 24, "I4", "H4")
+#mayo
+fecha_mes[4].replaceinside(1, "J5", 25, "I5", "H5")
+fecha_mes[4].replaceinside(15, "J2", 22, "I2", "H2")
+fecha_mes[4].replaceinside(12, "J4", 24, "I4", "H4")
+#junio
+fecha_mes[5].replaceinside(6, "J6", 20, "II", "H6") 
+#julio
+fecha_mes[6].replaceinside(7, "J2", 22, "I2", "H2")
+#agosto
+fecha_mes[7].replaceinside(8, "J4", 24, "I4", "H4")
+fecha_mes[7].replaceinside(1, "J1", 21, "I1", "H1")
+fecha_mes[7].replaceinside(13, "J6", 20, "II", "H6")
+fecha_mes[7].replaceinside(27, "J3", 23, "I3", "H3")
+#septiembre
+fecha_mes[8].replaceinside(9, "J3", 23, "I3", "H3")
+#octubre
+fecha_mes[9].replaceinside(10, "J4", 24, "I4", "H4")
+#noviembre
+fecha_mes[10].replaceinside(11, "J5", 25, "I5", "H5")
+#diciembre
+fecha_mes[11].replaceinside(12, "J3", 23, "I3", "H3")
+
+for i in range(1,13):
+    print(" ")
+    print("MES ", i )
+    fecha_mes[i-1].list_traversed()#se imprimen los eventos del año
+
+#fecha_mes[0].list_traversed()
+
+print("-------------------")
+def search_by_event(year, event):#busqueda bajo el parametro de evento
+    cevent = 0
+    times = 0
+    for month in year:
+        node = month.head_node
+        events = []
+        while node:
+            if(node.evento == event):
+                times +=1
+                print("Dia: " + str(node.dia) + "|| Mes: " + str(cevent+1) + "||  Evento: " + str(node.evento))
+            node = node.next_node
+        cevent += 1
+    print("Para la búsqueda de ", str(event)," se tiene un total de ", times, " eventos encontrados")#numero de eventos compatibles
+    print("-------------------")
+    
+def search_by_place(year, place):#busqueda bajo el parametro de lugar
+    clugar = 0
+    times = 0
+    for month in year:
+        node = month.head_node
+        events = []
+        while node:
+            if(node.lugar == place):
+                times +=1
+                print("Dia: " + str(node.dia) + "|| Mes: " + str(clugar+1) + "||  Lugar: " + str(node.lugar))
+            node = node.next_node
+        clugar += 1
+    print("Para la búsqueda de ", str(place)," se tiene un total de ", times, " eventos encontrados")#numero de eventos compatibles
+    print("-------------------")
+    
+def search_by_host(year, host):#busqueda bajo el parametro de host
+    chost = 0
+    times = 0
+    for month in year:
+        node = month.head_node
+        events = []
+        while node:
+            if(node.host == host):
+                times +=1
+                print("Dia: " + str(node.dia) + "|| Mes: " + str(chost+1) + "||  Evento: " + str(node.host))
+            node = node.next_node
+        chost += 1
+    print("Para la búsqueda de ", str(host)," se tiene un total de ", times, " eventos encontrados")#numero de eventos compatibles
+    print("-------------------")
+
+search_by_event(fecha_mes, "H3")
+search_by_host(fecha_mes, "J2")
+search_by_place(fecha_mes, "II")#testeo de busquedas
