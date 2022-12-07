@@ -1,0 +1,163 @@
+dia = 1
+class Node: #dia del calendario 
+    
+
+    def __init__(self, nombre_invitado=None, numero_invitados=None, lugar=None, evento=None):
+
+        self.next_node = None  #orden estandar de los dias 1-30    
+
+        global dia 
+        
+          
+        if(dia == 32):
+            dia = 1
+        self.dia = dia   #cada coneccion de un nodo va aumentando el numero de dia 
+        dia +=1
+         # la siguiente vez que creo un nodo sera uno mas arriba 
+
+        self.nombre_invitado = nombre_invitado #una variable string que serivira para agrupar todos los nodos que contengan dicho nombre 
+        self.numero_invitados = numero_invitados #agrupar nodos que contengan mismo lugar 
+        self.lugar = lugar  #una variable string que serivira para agrupar todos los nodos que contengan dicho nombre
+        self.evento = evento #familiar, social, academicas 
+
+
+        
+    
+    def set_next_node(self, next_node):
+        self.next_node = next_node
+        
+
+    #def crear_evento():
+        #numero de invitados
+        #nombre de invitado 
+        #lugar
+        #fecha (prioridad por fecha mas cercana) Stack en linked list 
+ 
+mes = 1 
+class Singly_linked_list: 
+    """
+    Implementation of a singly linked list
+    """
+    def __init__(self, ):
+   
+        global mes      
+        if(mes == 12):
+            mes = 1
+        self.mes = mes  #meses desde 1-12
+        mes +=1
+        self.head_node = None
+        self.next_List = None #sirve para conectar mes 1, con mes 2, con mes 3 etc  porque cada mes es una linked list de 30 nodos 
+        self.next_node = None
+        self.fecha = []
+        
+        
+        for i in range(1,32):    
+            self.fecha.append(Node())#una single linked list crea 30 nodos y los conecta automaticamente
+            if(i > 1):
+               self.fecha[i-2].set_next_node(self.fecha[i-1])
+        self.head_node = self.fecha[0]       
+
+
+    def set_next_List(self, next_List): 
+        self.next_List = next_List
+
+    def list_traversed(self):
+        node = self.head_node
+        while node:
+            print(node.dia, ': ', node.nombre_invitado, ", ", node.numero_invitados, ", ", node.lugar, ", ", node.evento)
+            node = node.next_node
+            
+class Singly_linked_list(Singly_linked_list):
+
+
+    def insert_head(self, new_node):
+        new_node.set_next_node(self.head_node)
+        self.head_node = new_node
+        
+    def insert_tail(self, new_node):
+        node = self.head_node
+        prev = None
+        while node:
+            prev = node
+            node = node.next_node
+        prev.set_next_node(new_node)
+        
+    def insert_middle(self, new_node, value):
+        node = self.head_node
+        while node.val != value:
+            node = node.next_node
+        if node:
+            new_node.set_next_node(node.next_node)
+            node.set_next_node(new_node)
+        else:
+            self.insert_tail(new_node)
+            
+    def replaceinside(self,value,newnombre,newnumero,newlugar,newevento):
+        node = self.head_node
+        while node.dia != value:
+            node = node.next_node
+        node.nombre_invitado = newnombre
+        node.numero_invitados = newnumero
+        node.lugar = newlugar
+        node.evento = newevento
+
+     #ordenar por nombre de invitado      
+     #    mostrar todos los nodos donde aparezcan "Juan" 
+
+     #ordenar por lugar 
+     #    mostrar todos los nodos con parametro lugar "universidad"
+
+     #ordenar por tematicas
+     #     mostrar todos los nodos con tematica "social" 
+
+     #ordenar por mes 
+     # mostrar solamente los eventos del mes "enero"
+     
+     
+fecha_mes = []  #<----
+
+def año(): 
+
+    
+    for i in range(1,14):
+        fecha_mes.append(Singly_linked_list())#un año crea 12 single linked list conectadas en otra linked list
+        if(i > 1):
+           fecha_mes[i-2].set_next_List(fecha_mes[i-1])
+           
+año()
+
+#enero
+fecha_mes[0].replaceinside(2, "J1", 21, "I1", "H1")
+#febrero
+fecha_mes[1].replaceinside(2, "J2", 22, "I2", "H2")
+#marzo
+fecha_mes[2].replaceinside(3, "J3", 23, "I3", "H3")
+#abril
+fecha_mes[3].replaceinside(4, "J4", 24, "I4", "H4")
+#mayo
+fecha_mes[4].replaceinside(5, "J5", 25, "I5", "H5")
+#junio
+fecha_mes[5].replaceinside(6, "J6", 20, "II", "H6")
+
+for i in range(1,13):
+    print(" ")
+    print("MES ", i )
+    fecha_mes[i-1].list_traversed()
+
+#set_nombre_invitado('Juan')
+#REUSMEN
+#al crear una linked list, estoy creando 30 nodos y conectandolos en la linked list 
+#La funcion año() crea 12 linked list que a su vez estan conectadas 
+#hace falta hacer una funcion dentro de año() para que se pueda buscar un valor identico dentro de los nodos de las 12 linked list 
+#julio
+fecha_mes[6].replaceinside(7, "J2", 22, "I2", "H2")
+#agosto
+fecha_mes[7].replaceinside(8, "J4", 24, "I4", "4")
+#septiembre
+fecha_mes[8].replaceinside(9, "J3", 23, "I3", "H3")
+#octubre
+fecha_mes[9].replaceinside(10, "J4", 24, "I4", "H4")
+#noviembre
+fecha_mes[10].replaceinside(11, "J5", 25, "I5", "H5")
+#diciembre
+fecha_mes[11].replaceinside(12, "J3", 23, "I3", "H3")
