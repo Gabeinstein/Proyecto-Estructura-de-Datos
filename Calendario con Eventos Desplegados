@@ -138,12 +138,6 @@ fecha_mes[3].replaceinside(4, "J4", 24, "I4", "H4")
 fecha_mes[4].replaceinside(5, "J5", 25, "I5", "H5")
 #junio
 fecha_mes[5].replaceinside(6, "J6", 20, "II", "H6")
-
-for i in range(1,13):
-    print(" ")
-    print("MES ", i )
-    fecha_mes[i-1].list_traversed()
-
 #set_nombre_invitado('Juan')
 #REUSMEN
 #al crear una linked list, estoy creando 30 nodos y conectandolos en la linked list 
@@ -161,3 +155,22 @@ fecha_mes[9].replaceinside(10, "J4", 24, "I4", "H4")
 fecha_mes[10].replaceinside(11, "J5", 25, "I5", "H5")
 #diciembre
 fecha_mes[11].replaceinside(12, "J3", 23, "I3", "H3")
+
+for i in range(1,13):
+    print(" ")
+    print("MES ", i )
+    fecha_mes[i-1].list_traversed()
+    
+print("-------------------")
+def search_by_event(year, event):
+    count = 0
+    for month in year:
+        node = month.head_node
+        events = []
+        while node:
+            if(node.evento == event):
+                print("Dia: " + str(node.dia) + "|| Mes: " + str(count) + "||  Evento: " + str(node.evento))
+            node = node.next_node
+        count += 1
+
+search_by_event(fecha_mes, "H3")
