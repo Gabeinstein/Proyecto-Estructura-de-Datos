@@ -183,7 +183,7 @@ def regresar_tabla(clave):
 
 #Creacion de eventos por dia
 def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
-    if mes>12:
+    if mes>12 or mes<=0:
         print("El mes que escogio no existe")
         return None
     i=1
@@ -211,6 +211,42 @@ def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
                 lugares_favoritos[fecha_evento.lugar]=1 #Ingreso datos en HashTable
         fecha_evento=fecha_evento.next_node
         i+=1
+
+#Eliminacion de eventos por dia
+def eliminar_evento(mes,dia):
+    if mes>12 or mes<=0:
+        print("El mes que escogio no existe")
+        return None
+    i=1
+    fecha_evento=fecha_mes[mes-1].head_node
+    while i<=dia:
+        if fecha_evento.dia==dia:
+            if(fecha_evento.nombre_invitado==None):
+                print("No existe evento en ese dia")
+                return None
+            
+            #Ingreso Eventos Hash
+            if eventos_favoritos[fecha_evento.evento]>1:#Se valida que no exista la clave del hashtable
+                eventos_favoritos[fecha_evento.evento]=eventos_favoritos[fecha_evento.evento]-1
+            else:
+                del eventos_favoritos[fecha_evento.evento] #Ingreso datos en HashTable
+            #Ingreso Invitados Hash 
+            if invitado_favoritos[fecha_evento.nombre_invitado]>1:#Se valida que no exista la clave del hashtable
+                invitado_favoritos[fecha_evento.nombre_invitado]=invitado_favoritos[fecha_evento.nombre_invitado]-1
+            else:
+                del invitado_favoritos[fecha_evento.nombre_invitado] #Ingreso datos en HashTable
+            #Ingreso Lugares Hash
+            if lugares_favoritos[fecha_evento.lugar]>1:#Se valida que no exista la clave del hashtable
+                lugares_favoritos[fecha_evento.lugar]=lugares_favoritos[fecha_evento.lugar]-1
+            else:
+                del lugares_favoritos[fecha_evento.lugar] #Ingreso datos en HashTable
+            fecha_evento.set_nombre_invitado(None)
+            fecha_evento.set_numero_invitados(None)
+            fecha_evento.set_lugar(None)
+            fecha_evento.set_evento(None)
+        fecha_evento=fecha_evento.next_node
+        i+=1
+
 
 #Funcion para mostrar un dia en especifico        
 def mostrar_evento(mes,dia):
@@ -325,7 +361,10 @@ ingreso_evento(1,11,"Pedro",22,"Casa","Familiar")
 ingreso_evento(2,2,"Jose",25,"Empresa","Laboral")
 ingreso_evento(1,19,"Maria",22,"Restaurante","Familiar")
 ingreso_evento(2,14,"Jose",25,"Empresa","Laboral")
+#prueba eliminacion evento
+eliminar_evento(2,2)
 
+print("-------------------")
 evento_recurrente() #muestra el evento que mas se repite
 invitado_recurrente() #muestra el invitado que mas se repite
 lugar_recurrente() #muestra el lugar que mas se repite
@@ -333,6 +372,7 @@ lugar_recurrente() #muestra el lugar que mas se repite
 #fecha_mes[1].list_traversed() #Calendario mes 2
 print("-------------------")
 print(invitado_favoritos)
+print(eventos_favoritos)
     
 print("-------------------")
     
@@ -340,3 +380,12 @@ search_by_event(fecha_mes, "Laboral")
 search_by_event(fecha_mes, "dd")
 search_by_host(fecha_mes, "Jose")
 search_by_place(fecha_mes, "Empresa")
+
+print("-------------------")
+fecha_mes[0].list_traversed()
+'''
+for i in range(0,12):
+    print("-------------------")
+    print("MES ", i+1)
+    fecha_mes[i].list_traversed()
+'''
