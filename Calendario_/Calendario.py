@@ -4,8 +4,9 @@ Created on Sun Nov 27 20:51:01 2022
 @author: cesar
 """
 
-from __future__ import division
 
+from __future__ import division
+import calendar
 
 
 #Creacion de dias---------------------
@@ -345,7 +346,112 @@ lugares_favoritos={} #HashTable donde se guardan lugares
 
 año() #Creacion del año
 
+ingreso_evento(2,11,"Jose",22,"USFQ","Graduacion")
+ingreso_evento(2,12,"Jose",25,"USFQ","Premiacion")
+ingreso_evento(1,20,"Jose",12,"Casa","Familiar")
+ingreso_evento(6,5,"Jose",5,"Cine","Social")
+ingreso_evento(1,11,"Pedro",22,"Casa","Familiar")
+ingreso_evento(2,2,"Jose",25,"Empresa","Laboral")
+ingreso_evento(1,19,"Maria",22,"Restaurante","Familiar")
+ingreso_evento(2,14,"Jose",25,"Empresa","Laboral")
 
+def display_calendar(year = None, month = None):
+    if (year == None and month == None):
+        year = int(input("Escriba el año: "))
+        month = int(input("Escriba el mes: "))
+        print("")
+
+    calendario = calendar.TextCalendar(calendar.SUNDAY)
+    display = calendario.formatmonth(year,month)
+    print (display)
+
+def menu(year = None,month = None):
+    print("")
+    print("APLICACION CALENDARIO")
+    print("")
+    
+    opcion = ''
+    while opcion != '12':
+        print("------- Menu -------")
+        print ("1. Ver todos eventos pendientes")
+        print ("2. Agregar evento")
+        print ("3. Eliminar evento")
+        print ("4. Mostrar calendario")
+        print ("5. Evento recurrente")
+        print ("6. Invitado recurrente")
+        print ("7. Lugar recurrente")
+        print ("8. Buscar por evento")
+        print ("9. Buscar por host")
+        print ("10. Buscar por lugar")
+        print ("11. Buscar dia")
+        print ("12. Salir")
+        print ("")
+        opcion = input("Escoger opciones(1-12): ")
+
+        if opcion == '1':
+            print("-------Todos los eventos guardados-------")
+            for i in range(0,12):
+                print("-------------------")
+                print("MES ", i+1)
+                fecha_mes[i].list_traversed()
+
+        elif opcion == '2':
+            print("-------Anadir evento-------")
+            mes = int(input("Escriba el mes: "))
+            dia = int(input("Escriba el dia: "))
+            nombre_inv = input("Nombre de invitado: ")
+            num_inv= int(input("Escriba numero de invitados: "))
+            lugar = input("Ingrese el lugar: ")
+            evento = input("Escriba el evento: ")
+            ingreso_evento(mes,dia,nombre_inv,num_inv,lugar,evento)
+
+        elif opcion == '3':
+            print("-------Eliminar evento-------")
+            mes = int(input("Escriba el mes: "))
+            dia = int(input("Escriba el dia: "))
+            eliminar_evento(mes,dia)
+
+        elif opcion == '4':
+            print("-------Calendario-------")
+            display_calendar()
+
+        elif opcion == '5':
+            print("-------Evento recurrente-------")
+            evento_recurrente()
+
+        elif opcion == '6':
+            print("-------Invitado recurrente-------")
+            invitado_recurrente()
+        
+        elif opcion == '7':
+            print("-------Lugar recurrente-------")
+            lugar_recurrente()
+        elif opcion == '8':
+            print("-------Buscar por evento-------")
+            evento = input("Escriba el evento: ")
+            search_by_event(fecha_mes,evento)
+        elif opcion == '9':
+            print("-------Buscar por host-------")
+            nombre_inv = input("Nombre de invitado: ")
+            search_by_host(fecha_mes,nombre_inv)
+        elif opcion == '10':
+            print("-------Buscar por lugar-------")
+            lugar = input("Ingrese el lugar: ")
+            search_by_place(fecha_mes,lugar)
+
+        elif opcion == '11':
+            print("-------Buscar dia-------")
+            mes = int(input("Escriba el mes: "))
+            dia = int(input("Escriba el dia: "))
+            fecha_mes[mes-1].evento_dia(dia)
+            
+        elif opcion == '12':
+            print("Gracias por usar el programa!")
+        else:
+            print("Opcion no valida")
+
+menu()
+'''
 #prueba de ingreso de datos
 ingreso_evento(2,11,"Jose",22,"USFQ","Graduacion")
 ingreso_evento(2,12,"Jose",25,"USFQ","Premiacion")
@@ -377,4 +483,5 @@ search_by_place(fecha_mes, "Empresa")
 
 print("-------------------")
 fecha_mes[0].list_traversed()
+'''
 
