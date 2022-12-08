@@ -152,18 +152,6 @@ class Singly_linked_list(Singly_linked_list):
         else:
             self.insert_tail(new_node)
 
-     #ordenar por nombre de invitado      
-     #    mostrar todos los nodos donde aparezcan "Juan" 
-
-     #ordenar por lugar 
-     #    mostrar todos los nodos con parametro lugar "universidad"
-
-     #ordenar por tematicas
-     #     mostrar todos los nodos con tematica "social" 
-
-     #ordenar por mes 
-     # mostrar solamente los eventos del mes "enero"
-           
 
 #Creacion del año---------------------
 fecha_mes = []  #<----Arreglo donde se guardan meses
@@ -209,6 +197,7 @@ def ingreso_evento(mes,dia,nombre_invitado, numero_invitados, lugar, evento):
                 lugares_favoritos[fecha_evento.lugar]=lugares_favoritos[fecha_evento.lugar]+1
             else:
                 lugares_favoritos[fecha_evento.lugar]=1 #Ingreso datos en HashTable
+            return None
         fecha_evento=fecha_evento.next_node
         i+=1
 
@@ -244,6 +233,7 @@ def eliminar_evento(mes,dia):
             fecha_evento.set_numero_invitados(None)
             fecha_evento.set_lugar(None)
             fecha_evento.set_evento(None)
+            return None
         fecha_evento=fecha_evento.next_node
         i+=1
 
@@ -341,7 +331,11 @@ def search_by_host(year, host):
         print("-------------------")
 
 
-
+def imprimir_año():
+    for i in range(0,12):
+        print("-------------------")
+        print("MES ", i+1)
+        fecha_mes[i].list_traversed()
 
 
 
@@ -383,9 +377,4 @@ search_by_place(fecha_mes, "Empresa")
 
 print("-------------------")
 fecha_mes[0].list_traversed()
-'''
-for i in range(0,12):
-    print("-------------------")
-    print("MES ", i+1)
-    fecha_mes[i].list_traversed()
-'''
+
